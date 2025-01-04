@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Particles</title>
+    <style>
+        html {
+            overflow: hidden;
+            /* cursor: none; */
+        }
+    </style>
+</head>
+<body bgcolor="#000">
+    <!-- <button onclick="createParticles()">CreateParticle</button> -->
+    <script>
+        var colors = ["#ff6000", "#ffb400", "#aa3800"]
+        class fragment {
+            constructor(x, y, w, h) {
+                var frag = document.createElement("div");
+                frag.style.position = "absolute";
+                frag.style.width = `${w}px`;
+                frag.style.height = `${h}px`;
+                frag.style.borderRadius = "100%";
+                // frag.style.backgroundColor = `${colors[Math.floor(Math.random()*colors.length)]}`;
+                frag.style.backgroundColor = `rgb(0, 155, 255)`;
+                frag.style.marginLeft = `${x}px`;
+                frag.style.marginTop = `${y}px`;
+                document.body.appendChild(frag);
+
+                this.update = () => {
+                    var angleH = -1 + Math.random() * 2;
+                    var angleV = -1 + Math.random() * 2;
+
+                    var xx = x + angleH - 200;
+                    var yy = y + angleV - 200;
+
+                    var opc = 1;
+
+                    var rb = 0;
+                    var gv = 1;
+
+                    setInterval(() => {
+                        // xx += angleH;
+                        // yy += angleV;
+                        xx += angleH * Math.PI * 2 / 10;
+                        yy += angleV * Math.PI * 2 / 10;
+                        frag.style.marginLeft = `${200 + xx}px`;
+                        frag.style.marginTop = `${200 + yy}px`;
+
+                        opc -= 0.005;
+                        frag.style.opacity = opc;
+
+                        
+                        /*if(yy>=500){
+                            // rb-=gv/100;
+                            // xx+=xx/yy;
+                        }else {
+                            rb+=gv;
+                            yy+=rb/5;
+                        }*/
+
+                        if(opc < 0) {                            
+                            frag.remove();
+                        }
+                    }, 1000 / 120);
+                }
+            }
+        }
+
+        // setInterval(() => {
+        //     createParticles();
+        // }, 100);
+
+        function createParticles(x,y,c) {
+            for(var i = 0; i <= c; i++) {
+                new fragment(x, y, 10, 10).update();
+            }
+        }
+
+        // createParticles(500, 200)
+
+        addEventListener("mousemove", function(e){
+            createParticles(e.x - 15, e.y - 15, 3);
+        });
+
+        var x = 0;
+        var spd = 4;
+
+        var t = 0;
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 10000);
+
+        // function a(n) {
+        //     var array = ['a', 'b', 'c', 'd', 'e', 'f'];
+        //     if(n+1 <= array.length) {
+        //         var arg = [];
+        //         for(let i = 0; i < n+1; i++) {
+        //             arg.push(array[i]);
+        //         }
+        //         return arg;
+        //     }else {
+        //         console.error("out of stack");
+        //     }
+        // }
+        // console.log(a(1));
+    </script>
+</body>
+</html>
